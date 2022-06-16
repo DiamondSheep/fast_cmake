@@ -31,13 +31,15 @@ cmake_minimum_required(VERSION 3.10)
 \nset(CMAKE_CXX_FLAGS -g)
 \n
 \naux_source_directory(src/ SOURCE_DIR)
-\nadd_subdirectory(lib/)
 \n
 \nlist(APPEND EXTRA_INCLUDES \${PROJECT_SOURCE_DIR}/include)
+\n
+\n#list(APPEND EXTRA_LIBS \${PROJECT_SOURCE_DIR}/lib)
 \n
 \nadd_executable(\${CMAKE_PROJECT_NAME} \${SOURCE_DIR})
 \n
 \ntarget_include_directories(\${CMAKE_PROJECT_NAME} PUBLIC \${PROJECT_BINARY_DIR} \${EXTRA_INCLUDES})
+\n#target_link_directories(\${CMAKE_PROJECT_NAME} PUBLIC \${EXTRA_LIBS})
 "
 # ----------------------------
 
@@ -61,10 +63,7 @@ src_content="
 # ----------------------------
 
 echo $src_content >> $project_name.cpp
-cd ../
 
-mkdir include
-cd include
 # get into $project_name/include
 touch $project_name.hpp
 upper_name=$(echo $project_name | tr '[:lower:]' '[:upper:]')
@@ -84,6 +83,11 @@ cd ../
 
 mkdir lib
 cd lib
+touch CMakeLists.txt
+cd ../
+
+mkdir include
+cd include
 touch CMakeLists.txt
 cd ../
 
